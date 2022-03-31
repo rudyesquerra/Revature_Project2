@@ -31,3 +31,10 @@ Requirements:
 ### Due Date
 - Presentations will take place on Monday, 4/13
 - Send Project proposal with MVP clearly labeled with 2-3 stretch goals by end of week, 4/1
+
+### Contributors
+- Evan Laferriere
+- Rudy Esquerra
+- Patrick Froerer
+- Youngjung Kim
+- Douglas Lam
