@@ -1,17 +1,24 @@
 import org.apache.spark.sql.SparkSession
+import org.apache.log4j.{Level, Logger}
+object test {
+  def main(args: Array[String]): Unit = {
+    println("Hello World!")
+    Logger.getLogger("org").setLevel(Level.ERROR)
 
-object test extends App{
-  println("Hello World!")
-  val spark =
-    SparkSession
-      .builder
-      .appName("Hello Spark App")
-      //.master("local")
-      .config("spark.master", "local")
-      .config("spark.eventLog.enabled", false)
-      .getOrCreate()
+    val spark =
+      SparkSession
+        .builder
+        .appName("Hello Spark App")
+        //.master("local")
+        .config("spark.master", "local")
+        .config("spark.eventLog.enabled", false)
+        .getOrCreate()
 
-  println("Hello Spark")
 
-  spark.stop()
+    Logger.getLogger("org").setLevel(Level.INFO)
+    spark.sparkContext.setLogLevel("ERROR")
+    println("Hello Spark")
+
+    spark.stop()
+  }
 }
