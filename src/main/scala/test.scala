@@ -18,7 +18,7 @@ object test {
     Logger.getLogger("org").setLevel(Level.INFO)
     spark.sparkContext.setLogLevel("ERROR")
     println("Hello Spark")
-    println("Hi, this is Rudy")
+    println("Hi, this is Rudy, from my forked project")
 
     spark.stop()
   }
