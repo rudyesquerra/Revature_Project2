@@ -20,6 +20,9 @@ object test {
     println("Hello Spark")
     println("Hi, this is Rudy, from my forked project")
 
+    println("Patrick Froerer ReCheck")
+
+
     spark.stop()
   }
 }
