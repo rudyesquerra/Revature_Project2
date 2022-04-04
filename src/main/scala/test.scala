@@ -19,6 +19,7 @@ object test {
     spark.sparkContext.setLogLevel("ERROR")
     println("Hello Spark")
     println("Hi, this is Rudy, from my forked project")
+    println("Patrick Froerer checkin")
 
     spark.stop()
   }
