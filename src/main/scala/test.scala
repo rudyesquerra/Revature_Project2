@@ -1,5 +1,6 @@
 import org.apache.spark.sql.SparkSession
 import org.apache.log4j.{Level, Logger}
+import QueryTesting._
 object test {
   def main(args: Array[String]): Unit = {
     println("Hello World!")
@@ -27,5 +28,6 @@ object test {
     spark.stop()
 
     println("youngjung")
+
   }
 }
