@@ -4,6 +4,7 @@ import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.catalyst.dsl.expressions.StringToAttributeConversionHelper
 import org.apache.spark.sql.functions._
 import java.io._
+import scala.io.StdIn._
 
 object QueryTesting {
   def main(args: Array[String]): Unit = {
@@ -48,6 +49,7 @@ object QueryTesting {
       .persist()
 
     //sort and filter table
+    //removes rows with null values in province_state and updated
     val covidDFNN = covidDF.filter(covidDF("Province_State").isNotNull && covidDF("Updated").isNotNull)
     val covidDF2 = covidDFNN.filter("Province_State NOT IN ('Unknown')")
 
@@ -62,23 +64,52 @@ object QueryTesting {
     //create view, load table, query table
     covidDF2.createOrReplaceTempView("CovidDF2")
     val t1 = spark.table("CovidDF2").cache()
+    val query1 = "select * from CovidDF2"
+    val query2 = "select COUNT(DISTINCT country_region) from CovidDF2"
+    val query3 = "select DISTINCT country_region from CovidDF2 ORDER BY country_region"
+    val query4 = "select country_region, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY country_region ORDER BY totalDeaths DESC"
     //shows table preview
-    t1.sqlContext.sql("select * from CovidDF2").show()
+    //t1.sqlContext.sql(query1).show()
     //there are 31 country_region values
-    t1.sqlContext.sql("select COUNT(DISTINCT country_region) from CovidDF2").show(40)
+    //t1.sqlContext.sql(query2).show(40)
     //shows existing country_region values
-    t1.sqlContext.sql("select DISTINCT country_region from CovidDF2 ORDER BY country_region").show(40)
+    //t1.sqlContext.sql(query3).show(40)
     //shows total deaths per country_region
-    t1.sqlContext.sql("select country_region, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY country_region ORDER BY totalDeaths DESC").show(40)
+    //t1.sqlContext.sql(query4).show(40)
     //shows total covid deaths overtime
+    def runQuery() {
+      var command = ""
+      while (command != "2") {
+        val query = readLine("Enter option [1]query, [2]stop: ")
+        if (query == "1") {
+          try {
+            val query = readLine("Enter query: ")
+
+            t1.sqlContext.sql(query).show(40)
+          }
+          catch {
+            case a: Exception => println("Incorrect input")
+          }
+        }
+        else if (query == "2") {
+          spark.stop()
+          command = query
+        }
+      }
+    }
+    runQuery()
+    //t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC")
+
+
+
+    //alternative
     //t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC").toDF.coalesce(1).write.format("json").save("json_export/test.json")
-    //t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC").toDF.coalesce(1).write.format("json").save("json_export/test.json")
-    t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC")
+/*    t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC")
       .toDF //cast to DataFrame type
       .coalesce(1) //combine into 1 partition
       .write
       .mode(SaveMode.Overwrite) //overwrite existing file
-      .json("json_export/test.json") //save to path location within Project2, it is actually a folder with 4 files, bottom most file is in json format
+      .json("json_export/test.json") //save to path location within Project2, it is actually a folder with 4 files, bottom most file is in json format*/
 
 
 
