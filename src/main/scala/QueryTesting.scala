@@ -1,8 +1,7 @@
-import JsonHandler.dfCovid19
-import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.apache.log4j.{Level, Logger}
-import org.apache.spark.sql.catalyst.dsl.expressions.StringToAttributeConversionHelper
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
+
 import java.io._
 import scala.io.StdIn._
 
@@ -50,6 +49,8 @@ object QueryTesting {
 
     //sort and filter table
     //removes rows with null values in province_state and updated
+    val covidUSA = covidDF.filter(covidDF("Country_Region")==="US")
+    val covidChina = covidDF.filter(covidDF("Country_Region")==="Mainland China")
     val covidDFNN = covidDF.filter(covidDF("Province_State").isNotNull && covidDF("Updated").isNotNull)
     val covidDF2 = covidDFNN.filter("Province_State NOT IN ('Unknown')")
 
@@ -58,12 +59,15 @@ object QueryTesting {
     //covidDF2.write.saveAsTable("covidComplete")
 
     //attempt to use overwrite mode, but returns "covidComplete already exists"
-    covidDF2.write.mode("overwrite").saveAsTable("covidComplete")
+    //covidDF2.write.mode("overwrite").saveAsTable("covidComplete")
 
 
     //create view, load table, query table
     covidDF2.createOrReplaceTempView("CovidDF2")
     val t1 = spark.table("CovidDF2").cache()
+
+    covidUSA.createOrReplaceTempView("covidUSA")
+    val t2 = spark.table("covidUSA").cache()
     val query1 = "select * from CovidDF2"
     val query2 = "select COUNT(DISTINCT country_region) from CovidDF2"
     val query3 = "select DISTINCT country_region from CovidDF2 ORDER BY country_region"
@@ -84,7 +88,7 @@ object QueryTesting {
         if (query == "1") {
           try {
             val query = readLine("Enter query: ")
-
+            //t2.sqlContext.sql(query).show(40)
             t1.sqlContext.sql(query).show(40)
           }
           catch {
@@ -98,13 +102,16 @@ object QueryTesting {
       }
     }
     runQuery()
-    //t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC")
+
 
 
 
     //alternative
     //t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC").toDF.coalesce(1).write.format("json").save("json_export/test.json")
-/*    t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC")
+
+
+    //SAVE TO JSON
+    /*    t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC")
       .toDF //cast to DataFrame type
       .coalesce(1) //combine into 1 partition
       .write
