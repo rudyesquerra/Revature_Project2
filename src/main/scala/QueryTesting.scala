@@ -1,5 +1,5 @@
 import org.apache.log4j.{Level, Logger}
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.apache.spark.sql.functions._
 
 import java.io._
@@ -50,6 +50,7 @@ object QueryTesting {
     //sort and filter table
     //removes rows with null values in province_state and updated
     val covidUSA = covidDF.filter(covidDF("Country_Region")==="US")
+    val cleanUSA = covidUSA.filter(covidDF("Province_State").isNotNull && covidDF("Updated").isNotNull)
     val covidChina = covidDF.filter(covidDF("Country_Region")==="Mainland China")
     val covidDFNN = covidDF.filter(covidDF("Province_State").isNotNull && covidDF("Updated").isNotNull)
     val covidDF2 = covidDFNN.filter("Province_State NOT IN ('Unknown')")
@@ -72,6 +73,9 @@ object QueryTesting {
     val query2 = "select COUNT(DISTINCT country_region) from CovidDF2"
     val query3 = "select DISTINCT country_region from CovidDF2 ORDER BY country_region"
     val query4 = "select country_region, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY country_region ORDER BY totalDeaths DESC"
+
+    cleanUSA.createOrReplaceTempView("cleanUSA")
+    val t3 = spark.table("cleanUSA").cache()
     //shows table preview
     //t1.sqlContext.sql(query1).show()
     //there are 31 country_region values
@@ -111,12 +115,12 @@ object QueryTesting {
 
 
     //SAVE TO JSON
-    /*    t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC")
+/*    t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC")
       .toDF //cast to DataFrame type
       .coalesce(1) //combine into 1 partition
       .write
       .mode(SaveMode.Overwrite) //overwrite existing file
-      .json("json_export/test.json") //save to path location within Project2, it is actually a folder with 4 files, bottom most file is in json format*/
+      .json("json_export/worldDeaths.json") *///save to path location within Project2, it is actually a folder with 4 files, bottom most file is in json format
 
 
 

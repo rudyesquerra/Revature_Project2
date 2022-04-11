@@ -1,7 +1,27 @@
-[0m[[0m[0mdebug[0m] [0m[0mPackaging /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.13/project2_2.13-0.1.0-SNAPSHOT.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mPackaging /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/project2_2.12-0.1.0.jar ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	JsonHandler$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/classes/JsonHandler$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	JsonHandler$delayedInit$body.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/classes/JsonHandler$delayedInit$body.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	JsonHandler.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/classes/JsonHandler.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Logger2$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/classes/Logger2$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Logger2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/classes/Logger2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	machineLearningTest$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/classes/machineLearningTest$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	machineLearningTest$delayedInit$body.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/classes/machineLearningTest$delayedInit$body.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	machineLearningTest.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/classes/machineLearningTest.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	QueryTesting$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/classes/QueryTesting$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	QueryTesting.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/classes/QueryTesting.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	test$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.13/classes/test$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/classes/test$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	test.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.13/classes/test.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /mnt/c/Users/Douglas/Desktop/Revature_Project2/target/scala-2.12/classes/test.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m
