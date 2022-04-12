@@ -66,6 +66,7 @@ object machineLearningTest extends App{
         "obsv_date " +
       "ORDER BY " +
         "obsv_date").cache()
+
   t3.sqlContext
     .sql("" +
       "select " +
@@ -91,16 +92,18 @@ object machineLearningTest extends App{
       "ORDER BY " +
       "obsv_date").show(5)
 
-  "select " +
-    "obsv_date, SUM(Deaths) as totalDeaths , " +
-    "lag(SUM(Deaths),1,0) over (order by obsv_date) as lag, " +
-    "ROW_NUMBER() OVER (ORDER BY obsv_date) - 1 row_num " +
-    "from " +
-    "covidDF2 " +
-    "GROUP BY " +
-    "obsv_date " +
-    "ORDER BY " +
-    "obsv_date"
+  t3.sqlContext
+    .sql("" +
+      "select " +
+      "obsv_date, SUM(Deaths) as totalDeaths , " +
+      "lag(SUM(Deaths),1,0) over (order by obsv_date) as lag, " + //lag difference
+      "ROW_NUMBER() OVER (ORDER BY obsv_date) - 1 row_num " + //zero based index based on obsv_date
+      "from " +
+      "cleanUSA " +
+      "GROUP BY " +
+      "obsv_date " +
+      "ORDER BY " +
+      "obsv_date").show(5)
 
   //combine(assemble) Array of features into one feature
   //also

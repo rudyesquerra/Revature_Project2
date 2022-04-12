@@ -1,4 +1,0 @@
-[0m[[0m[33mwarn[0m] [0m[0m/mnt/c/Users/Douglas/Desktop/Revature_Project2/src/main/scala/machineLearningTest.scala:100:17: a pure expression does nothing in statement position; multiline expressions may require enclosing parentheses[0m
-[0m[[0m[33mwarn[0m] [0m[0m    "ORDER BY " +[0m
-[0m[[0m[33mwarn[0m] [0m[0m                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

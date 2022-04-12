@@ -9,7 +9,12 @@ object QueryTesting {
   def main(args: Array[String]): Unit = {
     println("Hello World!")
 
-    //suppresses all messages other than ERROR type
+    /**
+     * Logger: This is the central interface in the log4j package. Most logging operations, except configuration, are done through this interface.
+     * getLogger: Returns a Logger with the name of the calling class
+     * Level:  used for identifying the severity of an event.
+     * ERROR: An error in the application, possibly recoverable.
+     */
     Logger.getLogger("org").setLevel(Level.ERROR)
 
     //for reading files in spark-warehouse
@@ -19,12 +24,12 @@ object QueryTesting {
     val spark =
       SparkSession
         .builder
-        .appName("Hello Spark App")
+        .appName("Hello Spark App") //Sets a name for the application
         //.master("local")
-        .config("spark.master", "local")
-        .config("spark.eventLog.enabled", false)
-        .enableHiveSupport()
-        .getOrCreate()
+        .config("spark.master", "local")  //Sets configuration option - Sets the Spark master URL to connect to, such as "local" to run locally
+        .config("spark.eventLog.enabled", false)  //Whether to log Spark events, useful for reconstructing the Web UI after the application has finished.
+        .enableHiveSupport()  //Enables Hive support, including connectivity to a persistent Hive metastore
+        .getOrCreate()  //Gets an existing SparkSession or, if there is no existing one, creates a new one based on the options set in this builder.
 
 
     Logger.getLogger("org").setLevel(Level.ERROR)
@@ -62,6 +67,8 @@ object QueryTesting {
     //attempt to use overwrite mode, but returns "covidComplete already exists"
     //covidDF2.write.mode("overwrite").saveAsTable("covidComplete")
 
+    //requires no other code to run tables in spark-warehouse
+    //spark.sql("select * from covidComplete").show()
 
     //create view, load table, query table
     covidDF2.createOrReplaceTempView("CovidDF2")
@@ -109,11 +116,6 @@ object QueryTesting {
 
 
 
-
-    //alternative
-    //t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC").toDF.coalesce(1).write.format("json").save("json_export/test.json")
-
-
     //SAVE TO JSON
 /*    t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC")
       .toDF //cast to DataFrame type
@@ -123,11 +125,7 @@ object QueryTesting {
       .json("json_export/worldDeaths.json") *///save to path location within Project2, it is actually a folder with 4 files, bottom most file is in json format
 
 
-
-
-    //requires no other code to run tables in spark-warehouse
-    //spark.sql("select * from covidComplete").show()
-
+    
 
     //stop sparkSessions
     spark.stop()
