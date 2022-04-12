@@ -47,6 +47,6 @@ How to run the app using spark-submit in WSL-Ubuntu
 <li>Start the resource manager with => <i>startyarn</i></li>
 <li>create src/main/source directories in your home directory (/home/username/src/main/source) using the following command: <br>
 <i>hdfs dfs -mkdir -p src/main/source</i></li>
-<li>Jump into the directory where the jar is located (e.g. /mnt/c/Users/<username>/Desktop)</li>
+<li>Jump into the directory where the jar is located (e.g. /mnt/c/Users/\<username\>/Desktop)</li>
 <li>run the following command => <i>spark-submit --class QueryTesting project2_2.12-0.1.0.jar</i>
 </ul>
