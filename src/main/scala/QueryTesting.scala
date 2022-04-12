@@ -9,7 +9,7 @@ object QueryTesting {
   def main(args: Array[String]): Unit = {
     println("Hello World!")
 
-    /**
+    /*
      * Logger: This is the central interface in the log4j package. Most logging operations, except configuration, are done through this interface.
      * getLogger: Returns a Logger with the name of the calling class
      * Level:  used for identifying the severity of an event.
@@ -94,41 +94,42 @@ object QueryTesting {
     //shows total covid deaths overtime
     def runQuery() {
       var command = ""
-      while (command != "2") {
-        val query = readLine("Enter option [1]query, [2]stop: ")
+      while (command != "3") {
+        var query = readLine("Enter option [1]query, [2]saveToJSON, [3]stop: ")
         if (query == "1") {
           try {
-            val query = readLine("Enter query: ")
+            val query2 = readLine("Enter query: ")
             //t2.sqlContext.sql(query).show(40)
-            t1.sqlContext.sql(query).show(40)
+            t1.sqlContext.sql(query2).show(40)
           }
           catch {
             case a: Exception => println("Incorrect input")
           }
         }
         else if (query == "2") {
+          try {
+            val query3 = readLine("Enter query to save to JSON: ")
+            val filename = readLine("Enter file name(DO NOT APPEND .json): ")
+            t1.sqlContext.sql(query3)
+              .toDF //cast to DataFrame type
+              .coalesce(1) //combine into 1 partition
+              .write
+              .mode(SaveMode.Overwrite) //overwrite existing file
+              .json(s"json_export/$filename.json")
+          }
+          catch {
+            case a: Exception => println("Incorrect input")
+          }
+        }
+        else if (query == "3") {
           spark.stop()
-          command = query
+          command = "3"
         }
       }
     }
     runQuery()
 
-
-
-    //SAVE TO JSON
-/*    t1.sqlContext.sql("select obsv_date, SUM(Deaths) as totalDeaths from CovidDF2 GROUP BY obsv_date ORDER BY totalDeaths DESC")
-      .toDF //cast to DataFrame type
-      .coalesce(1) //combine into 1 partition
-      .write
-      .mode(SaveMode.Overwrite) //overwrite existing file
-      .json("json_export/worldDeaths.json") *///save to path location within Project2, it is actually a folder with 4 files, bottom most file is in json format
-
-
     
-
-    //stop sparkSessions
-    spark.stop()
 
   }
 }
