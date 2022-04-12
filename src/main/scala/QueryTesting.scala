@@ -132,13 +132,15 @@ object QueryTesting {
       println("\nUtah confirmed Nov/Dec")
       t1.sqlContext.sql("SELECT Obsv_Date, Confirmed, (Confirmed / lag(Confirmed) OVER (ORDER BY 'Obsv_Date') -1) AS percent_change_cases from covidDF2 WHERE Obsv_Date BETWEEN '2020-11-09' AND '2020-12-09' AND Province_State = 'Utah'").show(5)
 
-      //YoungJung's Queries
+      //Rudy's Queries
       println("\nUS states confirmed cases")
       t1.sqlContext.sql("SELECT Province_State, SUM(Confirmed) AS Confirmed_Cases_Feb20toFeb21 FROM CovidDF2 WHERE Updated BETWEEN '2020-01-01' AND '2021-01-01' AND Country_Region = 'US'  GROUP BY Province_State ORDER BY Confirmed_Cases_Feb20toFeb21 DESC").show(5)
+      println("\nConfirmed cases in CA")
+      t1.sqlContext.sql("SELECT Obsv_Date, Province_State, Confirmed FROM CovidDF2 WHERE obsv_date BETWEEN '2020-01-01' AND '2021-12-31' AND Province_State='California' ").show(5)
+
+      //YoungJung's Queries
       println("\ntotal confirmed global cases by month")
       t1.sqlContext.sql("SELECT CONCAT(YEAR(Obsv_Date),'-', Month(Obsv_Date)) AS months, SUM(Confirmed) AS confirmed FROM CovidDF2 GROUP BY months ORDER BY months").show(5)
-
-
       println("\nUS states confirmed cases")
       t1.sqlContext.sql("SELECT CONCAT(YEAR(Obsv_Date),'-', Month(Obsv_Date)) AS months, SUM(Confirmed) AS confirmed FROM CovidDF2 WHERE Country_Region = 'US' GROUP BY months ORDER BY months").show(5)
 
@@ -181,6 +183,7 @@ object QueryTesting {
         var query = readLine("Enter option [1]query, [2]saveToJSON, [3]read queries [4]stop: ")
         if (query == "1") {
           try {
+            println("Table name is: coviddf2")
             val query2 = readLine("Enter query: ")
             //t2.sqlContext.sql(query).show(40)
             t1.sqlContext.sql(query2).show(40)
@@ -191,6 +194,7 @@ object QueryTesting {
         }
         else if (query == "2") {
           try {
+            println("Table name is: coviddf2")
             val query3 = readLine("Enter query to save to JSON: ")
             val filename = readLine("Enter file name(DO NOT APPEND .json): ")
             t1.sqlContext.sql(query3)
